@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Unosquare.Raspberry.IO" Version="0.17.0"/>
+    <PackageReference Include="nlog" Version="4.6.6" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.5.2" />
+    <PackageReference Include="Unosquare.Raspberry.IO" Version="0.17.0" />
   </ItemGroup>
 </Project>
