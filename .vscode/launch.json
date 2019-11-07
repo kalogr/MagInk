@@ -1,22 +1,19 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
         {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Kalo.MagInk.RaspiCommunication/bin/Debug/netcoreapp2.1/Kalo.MagInk.RaspiCommunication.dll",
+            "program": "${workspaceFolder}/Kalo.MagInk.Console/bin/Debug/netcoreapp3.0/Kalo.MagInk.Console.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Kalo.MagInk.RaspiCommunication",
-            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "cwd": "${workspaceFolder}",
             "console": "internalConsole",
-            "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart"
+            "stopAtEntry": false
         },
         {
             "name": ".NET Core Attach",
@@ -24,5 +21,5 @@
             "request": "attach",
             "processId": "${command:pickProcess}"
         }
-    ,]
+    ]
 }

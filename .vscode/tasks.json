@@ -7,9 +7,34 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Kalo.MagInk.RaspiCommunication/Kalo.MagInk.RaspiCommunication.csproj"
+                "${workspaceFolder}/Kalo.MagInk.Console/Kalo.MagInk.Console.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildAndPublish",
+            "dependsOn": [
+                "build",
+                "publishLinuxArm",
+                "deploy"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "deploy",
+            "type": "shell",
+            "command": "scp -r ${workspaceFolder}/Kalo.MagInk.Console/bin/Debug/netcoreapp3.0/linux-arm/publish/Kalo* pi@169.254.91.41:~/Documents/MagInk"
+        },
+        {
+            "label": "publishLinuxArm",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "-r",
+                "linux-arm"
+            ]
         }
     ]
 }

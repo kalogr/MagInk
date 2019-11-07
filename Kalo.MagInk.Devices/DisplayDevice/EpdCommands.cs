@@ -1,7 +1,8 @@
 
-namespace Kalo.MagInk.RaspPi
+namespace Kalo.MagInk.DisplayDevice
 {
-    public static class EPD2in9bCommands 
+    /** List of electronic paper display commands. */
+    public static class EpdCommands 
     {
         public static readonly byte PANEL_SETTING = 0x00;
         public static readonly byte POWER_SETTING = 0x01;
