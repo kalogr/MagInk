@@ -4,4 +4,6 @@ Kalo.MagInk.Devices/obj/*
 Kalo.MagInk.Devices/bin/*
 Kalo.MagInk.Draw/obj/*
 Kalo.MagInk.Draw/bin/*
+.vs/*
 .DS_Store
+id_rsa

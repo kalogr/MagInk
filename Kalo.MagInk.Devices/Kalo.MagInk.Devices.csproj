@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Iot.Device.Bindings" Version="1.0.0" />
-    <PackageReference Include="NLog" Version="4.7.0" />
+    <PackageReference Include="NLog" Version="4.7.2" />
     <PackageReference Include="System.Device.Gpio" Version="1.0.0" />
   </ItemGroup>
 

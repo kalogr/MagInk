@@ -30,15 +30,14 @@ namespace Kalo.MagInk.Draw
             try
             {
                 Bitmap bmp = new Bitmap(width, height);
-                using (Graphics graphics = Graphics.FromImage(bmp))
-                {
-                    Font font = new Font(fontName, fontSize);
-                    graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, bmp.Width, bmp.Height);
-                    graphics.DrawString(text, font, new SolidBrush(Color.Black), 0, 0);
-                    graphics.Flush();
-                    font.Dispose();
-                    graphics.Dispose();
-                }
+                using Graphics graphics = Graphics.FromImage(bmp);
+                Font font = new Font(fontName, fontSize);
+
+                graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, bmp.Width, bmp.Height);
+                graphics.DrawString(text, font, new SolidBrush(Color.Black), 0, 0);
+                graphics.Flush();
+                font.Dispose();
+                graphics.Dispose();
 
                 return bmp;
             }

@@ -44,13 +44,14 @@ namespace Kalo.MagInk.Console
                 //geometryDrawTools.DrawFilledRectangle(frameRed, 10, 180, 50, 240, true);
                 //geometryDrawTools.DrawFilledRectangle(frameRed, 0, 6, 128, 26, true);
                 //geometryDrawTools.DrawFilledCircle(frameRed, 90, 210, 30, true);
-                geometryDrawTools.DrawFilledRectangle(frameBlack, 5, 5, 55, 55, true);
-                geometryDrawTools.DrawFilledRectangle(frameRed, 25, 25, 35, 35, true);
+                //geometryDrawTools.DrawFilledRectangle(frameBlack, 5, 5, 55, 55, true);
+                //geometryDrawTools.DrawFilledRectangle(frameRed, 25, 25, 35, 35, true);
 
 
                 // Write strings to the buffer
                 //stringDrawTools.DrawStringAt(frameBlack, 4, 70, "*Prout*!", "/usr/share/fonts/truetype/freefont/FreeMono.ttf", 16, true);
-                //geometryDrawTools.DrawRectangle(frameRed, 3, 69, 105, 100, true);
+                stringDrawTools.DrawStringAt(frameBlack, 4, 70, "*Prout*!", "FreeMono", 24, true);
+                geometryDrawTools.DrawRectangle(frameRed, 3, 69, 105, 100, true);
                 //stringDrawTools.DrawStringAt(frameRed, 6, 10, "Hello world !", "/usr/share/fonts/truetype/freefont/FreeMono.ttf", 16, false);
 
                 // Display the frames
@@ -63,8 +64,10 @@ namespace Kalo.MagInk.Console
             {
                 logger.Fatal(ex, "Error in MagInk main program >");
             }
-
-            DisposeServices();
+            finally
+            {
+                DisposeServices();
+            }
         }
 
         #region Dependency injection
