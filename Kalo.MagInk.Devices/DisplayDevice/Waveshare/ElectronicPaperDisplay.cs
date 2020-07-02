@@ -1,11 +1,10 @@
-using System;
-using Kalo.MagInk.Devices;
 using System.Device.Gpio;
-using NLog;
+using Kalo.MagInk.Devices.Interface;
 using Kalo.MagInk.Devices.RaspPi;
 using Kalo.MagInk.Draw;
+using NLog;
 
-namespace Kalo.MagInk.DisplayDevice
+namespace Kalo.MagInk.Devices.DisplayDevice.Waveshare
 {
     /** Define a generic Electronic Paper Display (EPD). */
     public class ElectronicPaperDisplay : IElectronicPaperDisplay
@@ -23,15 +22,15 @@ namespace Kalo.MagInk.DisplayDevice
         #region Private variables
 
         private readonly DrawingArea _drawingArea;
-        private EpdCommunicationInterface epdCommInt;
-        private Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly EpdCommunicationInterface _epdCommInt;
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         #endregion
 
 
         public ElectronicPaperDisplay(DrawingArea drawingArea, int epdWidth, int epdHeight)
         {
-            epdCommInt = new EpdCommunicationInterface();
+            _epdCommInt = new EpdCommunicationInterface();
 
             EPaperDisplayWidth = epdWidth;
             EPaperDisplayHeight = epdHeight;
@@ -43,36 +42,36 @@ namespace Kalo.MagInk.DisplayDevice
             _drawingArea.EpdWidth = EPaperDisplayWidth;
             _drawingArea.EpdHeight = EPaperDisplayHeight;
 
-            logger.Info($"Create Electronic Paper Display [{EPaperDisplayWidth},{EPaperDisplayHeight}]");
+            _logger.Info($"Create Electronic Paper Display [{EPaperDisplayWidth},{EPaperDisplayHeight}]");
         }
 
-        #region Module Communication
+        #region Communication module
 
         /** Init communication to device. */
         public void Init()
         {
-            logger.Info("Init EPD");
+            _logger.Info("Init EPD");
             Reset();
-            logger.Info("BOOSTER_SOFT_START");
+            _logger.Info("BOOSTER_SOFT_START");
             SendCommand(EpdCommands.BOOSTER_SOFT_START);
             SendData(0x17);
             SendData(0x17);
             SendData(0x17);
-            logger.Info("POWER_ON");
+            _logger.Info("POWER_ON");
             SendCommand(EpdCommands.POWER_ON);
             WaitUntilIdle();
-            logger.Info("PANEL_SETTING");
+            _logger.Info("PANEL_SETTING");
             SendCommand(EpdCommands.PANEL_SETTING);
             SendData(0x8F);
-            logger.Info("VCOM_AND_DATA_INTERVAL_SETTING");
+            _logger.Info("VCOM_AND_DATA_INTERVAL_SETTING");
             SendCommand(EpdCommands.VCOM_AND_DATA_INTERVAL_SETTING);
             SendData(0x77);
-            logger.Info("TCON_RESOLUTION");
+            _logger.Info("TCON_RESOLUTION");
             SendCommand(EpdCommands.TCON_RESOLUTION);
             SendData(0x80);
             SendData(0x01);
             SendData(0x28);
-            logger.Info("VCM_DC_SETTING_REGISTER");
+            _logger.Info("VCM_DC_SETTING_REGISTER");
             SendCommand(EpdCommands.VCM_DC_SETTING_REGISTER);
             SendData(0x0A);
         }
@@ -84,7 +83,7 @@ namespace Kalo.MagInk.DisplayDevice
 //             logger.Info($"Digital write [pin={pin}, value={value}]");
 // #endif
 
-            epdCommInt.DigitalWrite(pin, value);
+            _epdCommInt.DigitalWrite(pin, value);
         }
 
         /** Read value to a pin. */
@@ -94,21 +93,21 @@ namespace Kalo.MagInk.DisplayDevice
 //             logger.Info($"Digital read [pin={pin}]");
 // #endif
 
-            return epdCommInt.DigitalRead(pin);
+            return _epdCommInt.DigitalRead(pin);
         }
 
         /** Delay to sleep. */
         public void DelayMs(int delaytime)
         {
-            epdCommInt.DelayMs(delaytime);
+            _epdCommInt.DelayMs(delaytime);
         }
 
         /** Send command. */
         public void SendCommand(byte command)
         {
-            logger.Info($"Send command [command={command}]");
+            _logger.Info($"Send command [command={command}]");
             DigitalWrite(EpdCommunicationInterface.DC_PIN, PinValue.Low);
-            epdCommInt.SPITransfer(new[] { command });
+            _epdCommInt.SPITransfer(new[] { command });
         }
 
         /** Send data. */
@@ -118,13 +117,13 @@ namespace Kalo.MagInk.DisplayDevice
 //             logger.Info($"Send data [data={data}]");
 // #endif
             DigitalWrite(EpdCommunicationInterface.DC_PIN, PinValue.High);
-            epdCommInt.SPITransfer(new[] { data });
+            _epdCommInt.SPITransfer(new[] { data });
         }
 
         /** Wait until idle. */
         public void WaitUntilIdle()
         {
-            logger.Info("Wait until idle.");
+            _logger.Info("Wait until idle.");
             while (DigitalRead(EpdCommunicationInterface.BUSY_PIN) == 0) // 0: busy, 1: idle
             { DelayMs(100); }
         }
@@ -132,7 +131,7 @@ namespace Kalo.MagInk.DisplayDevice
         /** Reset device. */
         public void Reset()
         {
-            logger.Info("Reset device.");
+            _logger.Info("Reset device.");
             DigitalWrite(EpdCommunicationInterface.RST_PIN, PinValue.Low);
             DelayMs(200);
             DigitalWrite(EpdCommunicationInterface.RST_PIN, PinValue.High);
@@ -142,7 +141,7 @@ namespace Kalo.MagInk.DisplayDevice
         /** Display black and red frame to the device. FrameBuffer to null for ignore it. */
         public void DisplayFrame(byte[] frameBufferBlack, byte[] frameBufferRed)
         {
-            logger.Info("Display frame.");
+            _logger.Info("Display frame.");
 
             if (frameBufferBlack != null)
             {
@@ -175,7 +174,7 @@ namespace Kalo.MagInk.DisplayDevice
          * After this, call epd.init() to awaken the module. */
         public void Sleep()
         {
-            logger.Info("Device in sleep mode.");
+            _logger.Info("Device in sleep mode.");
             SendCommand(EpdCommands.VCOM_AND_DATA_INTERVAL_SETTING);
             SendData(0x37);
             SendCommand(EpdCommands.VCM_DC_SETTING_REGISTER); // to solve Vcom drop 

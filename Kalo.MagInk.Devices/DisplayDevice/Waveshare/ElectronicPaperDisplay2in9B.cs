@@ -1,7 +1,6 @@
-using System;
 using Kalo.MagInk.Draw;
 
-namespace Kalo.MagInk.DisplayDevice
+namespace Kalo.MagInk.Devices.DisplayDevice.Waveshare
 {
     /** Define a 2.9inch e-Paper Module (B) (Electronic Paper Display). */
     public class ElectronicPaperDisplay2in9B : ElectronicPaperDisplay

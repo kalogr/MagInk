@@ -1,5 +1,5 @@
 
-namespace Kalo.MagInk.DisplayDevice
+namespace Kalo.MagInk.Devices.DisplayDevice.Waveshare
 {
     /** List of electronic paper display commands. */
     public static class EpdCommands 

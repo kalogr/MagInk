@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using Kalo.MagInk.Draw.Interface;
 using NLog;
 
 namespace Kalo.MagInk.Draw
@@ -7,8 +8,7 @@ namespace Kalo.MagInk.Draw
     public class StringDrawToBuffer : IStringDrawToBuffer
     {
         private readonly IDrawToBuffer _pixelActions;
-        
-        private Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
 
         public StringDrawToBuffer(IDrawToBuffer pixelActions) => _pixelActions = pixelActions;
@@ -44,7 +44,7 @@ namespace Kalo.MagInk.Draw
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Convert text to image >");
+                _logger.Error(ex, $"Convert text to image >");
                 return null;
             }
         }

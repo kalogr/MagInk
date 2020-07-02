@@ -1,7 +1,6 @@
-using System;
 using System.Drawing;
 
-namespace Kalo.MagInk.Draw
+namespace Kalo.MagInk.Draw.Interface
 {
     public interface IDrawToBuffer
     {

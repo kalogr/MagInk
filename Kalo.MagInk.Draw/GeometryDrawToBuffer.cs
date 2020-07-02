@@ -1,4 +1,5 @@
 using System;
+using Kalo.MagInk.Draw.Interface;
 
 namespace Kalo.MagInk.Draw
 {

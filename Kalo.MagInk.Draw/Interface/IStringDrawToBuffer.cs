@@ -1,6 +1,4 @@
-using System;
-
-namespace Kalo.MagInk.Draw
+namespace Kalo.MagInk.Draw.Interface
 {
     public interface IStringDrawToBuffer
     {

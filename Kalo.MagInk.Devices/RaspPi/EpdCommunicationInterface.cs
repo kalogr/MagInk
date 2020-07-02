@@ -22,21 +22,21 @@ namespace Kalo.MagInk.Devices.RaspPi
         // ---------------
 
         /** Flag: Has Dispose already been called? */
-        private bool disposed = false;
+        private bool _disposed = false;
 
         /** Access to GPIO pins. */
-        private GpioController controller;
+        private readonly GpioController _controller;
 
         /** SPI device. */
-        private SpiDevice device;
+        private readonly SpiDevice _device;
 
         /** Logger. */
-        private Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
 
         public EpdCommunicationInterface()
         {
-            logger.Info("Create EPDCommunicationInterface");
+            _logger.Info("Create EPDCommunicationInterface");
             // Init GPIO //
             //GPIO.setmode(GPIO.BCM);
             //GPIO.setwarnings(False);
@@ -45,7 +45,7 @@ namespace Kalo.MagInk.Devices.RaspPi
             // Pi.Gpio[CS_PIN].PinMode = GpioPinDriveMode.Output;
             // Pi.Gpio[BUSY_PIN].PinMode = GpioPinDriveMode.Input;
             var driver = new RaspberryPi3Driver();
-            controller = new GpioController(PinNumberingScheme.Board, driver);
+            _controller = new GpioController(PinNumberingScheme.Board, driver);
 
             // Init SPI //
             // SPI device, bus = 0, device = 0
@@ -61,27 +61,27 @@ namespace Kalo.MagInk.Devices.RaspPi
                 ClockFrequency = 2000000
             };
 
-            device = new SoftwareSpi(clk: CLK_PIN, miso: MISO_PIN, mosi: MOSI_PIN, cs: CS_PIN, settings, controller);
+            _device = new SoftwareSpi(clk: CLK_PIN, miso: MISO_PIN, mosi: MOSI_PIN, cs: CS_PIN, settings, _controller);
         }
 
         /** Write value to a pin. */
         public void DigitalWrite(int pin, PinValue value)
         {
-            if (!controller.IsPinOpen(pin))
-            { controller.OpenPin(pin, PinMode.Output); }
+            if (!_controller.IsPinOpen(pin))
+            { _controller.OpenPin(pin, PinMode.Output); }
 
-            controller.Write(pin, value);
+            _controller.Write(pin, value);
             //controller.ClosePin(pin);
         }
 
         /** Read value to a pin. */
         public PinValue DigitalRead(int pin)
         {
-            if (!controller.IsPinOpen(pin))
-            { controller.OpenPin(pin, PinMode.Input); }
+            if (!_controller.IsPinOpen(pin))
+            { _controller.OpenPin(pin, PinMode.Input); }
             // controller.ClosePin(pin);
 
-            return controller.Read(pin);
+            return _controller.Read(pin);
         }
 
         /** Delay to sleep. */
@@ -93,7 +93,7 @@ namespace Kalo.MagInk.Devices.RaspPi
         /** Transfer data with SPI. */
         public void SPITransfer(byte[] data)
         {
-            device.Write(data);
+            _device.Write(data);
         }
 
         #region Dispose
@@ -105,16 +105,16 @@ namespace Kalo.MagInk.Devices.RaspPi
         /** Protected implementation of Dispose pattern. */
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (_disposed)
                 return;
 
             if (disposing)
             {
-                controller.Dispose();
-                device.Dispose();
+                _controller.Dispose();
+                _device.Dispose();
             }
 
-            disposed = true;
+            _disposed = true;
         }
         #endregion
     }

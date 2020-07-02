@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Kalo.MagInk.Devices;
-using Kalo.MagInk.DisplayDevice;
+using Kalo.MagInk.Devices.DisplayDevice.Waveshare;
+using Kalo.MagInk.Devices.Interface;
 using Kalo.MagInk.Draw;
+using Kalo.MagInk.Draw.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
 

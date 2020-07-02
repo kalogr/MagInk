@@ -1,6 +1,6 @@
 using System.Device.Gpio;
 
-namespace Kalo.MagInk.Devices
+namespace Kalo.MagInk.Devices.Interface
 {
     public interface IElectronicPaperDisplay
     {

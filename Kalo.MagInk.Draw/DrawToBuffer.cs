@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using Kalo.MagInk.Draw.Interface;
 
 namespace Kalo.MagInk.Draw
 {
@@ -26,9 +27,9 @@ namespace Kalo.MagInk.Draw
             }
             else if (_drawingArea.CurrentRotate == DrawingArea.ROTATE_90)
             {
-                int point_temp = x;
+                int pointTemp = x;
                 x = _drawingArea.EpdWidth - y;
-                y = point_temp;
+                y = pointTemp;
                 SetAbsolutePixel(frameBuffer, x, y, colored);
 
             }
@@ -41,9 +42,9 @@ namespace Kalo.MagInk.Draw
             }
             else if (_drawingArea.CurrentRotate == DrawingArea.ROTATE_270)
             {
-                int point_temp = x;
+                int pointTemp = x;
                 x = y;
-                y = _drawingArea.EpdHeight - point_temp;
+                y = _drawingArea.EpdHeight - pointTemp;
                 SetAbsolutePixel(frameBuffer, x, y, colored);
             }
         }
